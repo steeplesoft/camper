@@ -1,14 +1,17 @@
 package ch.benlu.composeform.fields
 
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.runtime.*
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import ch.benlu.composeform.Field
 import ch.benlu.composeform.FieldState
@@ -75,10 +78,10 @@ class PickerField<T: PickerValue>(
         if (isDialogVisible) {
             SingleSelectDialogComponent(
                 title = label,
-                optionsList = fieldState.options!!,
+                optionsList = fieldState.options,
                 optionItemFormatter = fieldState.optionItemFormatter,
                 defaultSelected = fieldState.state.value,
-                submitButtonText = stringResource(id = android.R.string.ok),
+                submitButtonText = "OK",
                 onSubmitButtonClick = {
                     isDialogVisible = false
                     this.onChange(it, form)

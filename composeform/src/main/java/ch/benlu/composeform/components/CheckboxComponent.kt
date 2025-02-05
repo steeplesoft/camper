@@ -2,11 +2,16 @@ package ch.benlu.composeform.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Checkbox
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,7 +34,7 @@ fun CheckboxComponent(
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.small)
             .clickable(
-                indication = rememberRipple(color = MaterialTheme.colors.primary),
+                indication = ripple(),
                 interactionSource = remember { MutableInteractionSource() },
                 onClick = { onCheckedChange(!checked) }
             )
@@ -47,7 +52,7 @@ fun CheckboxComponent(
 
                 Text(
                     text = label,
-                    style = MaterialTheme.typography.button
+                    style = MaterialTheme.typography.labelMedium
                 )
             }
         }
@@ -56,7 +61,7 @@ fun CheckboxComponent(
             Text(
                 text = errorText.joinToString(),
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                style = TextStyle.Default.copy(color = MaterialTheme.colors.error)
+                style = TextStyle.Default.copy(color = MaterialTheme.colorScheme.error)
             )
         }
     }

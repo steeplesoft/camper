@@ -1,14 +1,16 @@
 package ch.benlu.composeform.fields
 
-import android.annotation.SuppressLint
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -18,7 +20,6 @@ import ch.benlu.composeform.Field
 import ch.benlu.composeform.FieldState
 import ch.benlu.composeform.Form
 import ch.benlu.composeform.components.TextFieldComponent
-import java.util.*
 
 class PasswordField(
     label: String,
@@ -42,7 +43,6 @@ class PasswordField(
     /**
      * Returns a composable representing the DateField / Picker for this field
      */
-    @SuppressLint("NotConstructor")
     @Composable
     override fun Field() {
         this.updateComposableValue()

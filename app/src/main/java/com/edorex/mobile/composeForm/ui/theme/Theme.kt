@@ -1,20 +1,20 @@
 package com.edorex.mobile.composeForm.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
-private val DarkColorPalette = darkColors(
+val DarkColorPalette = darkColorScheme(
     primary = Purple200,
-    primaryVariant = Purple700,
+    inversePrimary = Purple700,
     secondary = Teal200
 )
 
-private val LightColorPalette = lightColors(
+val LightColorPalette = lightColorScheme(
     primary = Purple500,
-    primaryVariant = Purple700,
+    inversePrimary = Purple700,
     secondary = Teal200
 
     /* Other default colors to override
@@ -29,14 +29,12 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun ComposeFormTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
-
     MaterialTheme(
-        colors = colors,
+        colorScheme = if (darkTheme) {
+            DarkColorPalette
+        } else {
+            LightColorPalette
+        },
         typography = Typography,
         shapes = Shapes,
         content = content

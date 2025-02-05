@@ -1,32 +1,41 @@
 package ch.benlu.composeform.fields
 
-import android.app.DatePickerDialog
-import android.widget.DatePicker
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import ch.benlu.composeform.Field
 import ch.benlu.composeform.FieldState
 import ch.benlu.composeform.Form
 import ch.benlu.composeform.components.TextFieldComponent
-import java.util.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 class DateField(
     label: String,
     form: Form,
     modifier: Modifier? = Modifier,
-    fieldState: FieldState<Date?>,
+    fieldState: FieldState<LocalDate?>,
     isEnabled: Boolean = true,
     imeAction: ImeAction = ImeAction.Next,
-    formatter: ((raw: Date?) -> String)? = null,
+    formatter: ((raw: LocalDate?) -> String)? = null,
     private val themeResId: Int = 0,
-    changed: ((v: Date?) -> Unit)? = null
-) : Field<Date>(
+    changed: ((v: LocalDate?) -> Unit)? = null
+) : Field<LocalDate>(
     label = label,
     form = form,
     fieldState = fieldState,
@@ -40,6 +49,7 @@ class DateField(
     /**
      * Returns a composable representing the DateField / Picker for this field
      */
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Field() {
         this.updateComposableValue()
@@ -47,40 +57,49 @@ class DateField(
             return
         }
 
-        val focusRequester = FocusRequester()
-        val focusManager = LocalFocusManager.current
-        val context = LocalContext.current
-        val year: Int
-        val month: Int
-        val day: Int
+        val openDialog = remember { mutableStateOf(false) }
 
-        val calendar = Calendar.getInstance()
-        calendar.time = value.value ?: Date()
-        year = calendar.get(Calendar.YEAR)
-        month = calendar.get(Calendar.MONTH)
-        day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val focusRequester = FocusRequester()
+
+        val calendar = value.value ?: LocalDate.now()
 
         val date = remember { mutableStateOf("") }
-        val datePickerDialog = DatePickerDialog(
-            context,
-            themeResId,
-            { _: DatePicker, yyyy: Int, mm: Int, dd: Int ->
-                val c = Calendar.getInstance()
-                c.set(yyyy, mm, dd, 0, 0);
-                val d = c.time
-                date.value = d.toString()
-                value.value = d
-                this.onChange(d, form)
-            },
-            year,
-            month,
-            day
-        )
+        if (openDialog.value) {
+            val datePickerState = rememberDatePickerState(
+                initialSelectedDateMillis = calendar.toEpochDays() * 86400000L
+//                    Clock.System.now().toEpochMilliseconds()
+            )
 
-        datePickerDialog.setOnDismissListener {
-            focusManager.clearFocus()
+
+            DatePickerDialog(
+                onDismissRequest = {
+                    openDialog.value = false
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            datePickerState.selectedDateMillis?.let {
+                                fieldState.state.value = Instant.fromEpochMilliseconds(it).toLocalDateTime(TimeZone.UTC).date
+                            }
+                            openDialog.value = false
+                        }
+                    ) {
+                        Text("OK")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { openDialog.value = false }) { Text("Cancel") }
+                }
+            ) {
+                DatePicker(
+                    state = datePickerState,
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                )
+            }
+
+
         }
-
         TextFieldComponent(
             modifier = modifier ?: Modifier,
             isEnabled = isEnabled,
@@ -92,9 +111,18 @@ class DateField(
             focusRequester = focusRequester,
             focusChanged = {
                 if (it.isFocused) {
-                    datePickerDialog.show()
+                    openDialog.value = true
                 }
             }
         )
     }
 }
+
+
+fun LocalDate.Companion.now() = Clock.System.now()
+    .toLocalDateTime(TimeZone.currentSystemDefault()).date
+
+fun LocalDate.Companion.MIN() = LocalDate(-999_999_999, 1, 1)
+fun LocalDate.Companion.MAX() = LocalDate(999999999, 12, 31)
+fun LocalTime.Companion.MIN() = LocalTime(0, 0, 0, 0)
+fun LocalTime.Companion.MAX() = LocalTime(23, 5, 59, 999999999)

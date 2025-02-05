@@ -1,11 +1,18 @@
 package com.edorex.mobile.composeForm
 
 import androidx.compose.runtime.mutableStateOf
-import ch.benlu.composeform.*
-import ch.benlu.composeform.validators.*
+import ch.benlu.composeform.FieldState
+import ch.benlu.composeform.Form
+import ch.benlu.composeform.FormField
+import ch.benlu.composeform.fields.MIN
+import ch.benlu.composeform.validators.DateValidator
+import ch.benlu.composeform.validators.EmailValidator
+import ch.benlu.composeform.validators.IsEqualValidator
+import ch.benlu.composeform.validators.MinLengthValidator
+import ch.benlu.composeform.validators.NotEmptyValidator
 import com.edorex.mobile.composeForm.di.ResourcesProvider
 import com.edorex.mobile.composeForm.models.Country
-import java.util.*
+import kotlinx.datetime.LocalDate
 
 class MainForm(resourcesProvider: ResourcesProvider): Form() {
     override fun self(): Form {
@@ -94,7 +101,7 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
 
     @FormField
     val startDate = FieldState(
-        state = mutableStateOf<Date?>(null),
+        state = mutableStateOf<LocalDate?>(LocalDate(1974, 12, 23)),
         validators = mutableListOf(
             NotEmptyValidator()
         )
@@ -102,11 +109,11 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
 
     @FormField
     val endDate = FieldState(
-        state = mutableStateOf<Date?>(null),
+        state = mutableStateOf<LocalDate?>(null),
         validators = mutableListOf(
             NotEmptyValidator(),
             DateValidator(
-                minDateTime = {startDate.state.value?.time ?: 0},
+                minDateTime = {startDate.state.value ?: LocalDate.MIN()},
                 errorText = resourcesProvider.getString(R.string.error_date_after_start_date)
             )
         )
@@ -118,5 +125,10 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
         validators = mutableListOf(
             IsEqualValidator({ true })
         )
+    )
+
+    override fun getFormFields(): List<FieldState<*>> = listOf(
+        name, lastName, password, passwordConfirm, email, country, countryNotSearchable,
+        startDate, endDate, agreeWithTerms
     )
 }

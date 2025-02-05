@@ -1,12 +1,12 @@
 package ch.benlu.composeform
 
-import android.annotation.SuppressLint
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
-import java.util.*
 
 abstract class Field<T> (
     open val fieldState: FieldState<T?>,
@@ -42,7 +42,6 @@ abstract class Field<T> (
         fieldState.hasChanges.value = true
     }
 
-    @SuppressLint("NotConstructor")
     @Composable
     abstract fun Field()
 }

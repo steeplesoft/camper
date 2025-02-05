@@ -1,12 +1,11 @@
 package ch.benlu.composeform.formatters
 
-import java.text.DateFormat
-import java.util.*
+import kotlinx.datetime.LocalDate
 
-fun dateShort(r: Date?): String {
-    return if (r != null) DateFormat.getDateInstance().format(r) else ""
+fun dateShort(r: LocalDate?): String {
+    return if (r != null) LocalDate.Formats.ISO.format(r) else ""
 }
 
-fun dateLong(r: Date?): String {
-    return if (r != null) DateFormat.getDateInstance(DateFormat.LONG).format(r) else ""
+fun dateLong(r: LocalDate?): String {
+    return if (r != null) LocalDate.Formats.ISO.format(r) else ""
 }

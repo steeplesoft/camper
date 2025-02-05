@@ -1,11 +1,12 @@
 package ch.benlu.composeform.validators
 
 import ch.benlu.composeform.Validator
-import java.util.*
+import ch.benlu.composeform.fields.MIN
+import kotlinx.datetime.LocalDate
 
-class DateValidator(minDateTime: () -> Long, errorText: String? = null) : Validator<Date?>(
+class DateValidator(minDateTime: () -> LocalDate, errorText: String? = null) : Validator<LocalDate?>(
     validate = {
-        (it?.time ?: -1) >= minDateTime()
+        (it ?: LocalDate.MIN()) >= minDateTime()
     },
     errorText = errorText ?: "This field is not valid."
 )

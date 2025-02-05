@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.FocusState
@@ -20,7 +23,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -60,7 +62,7 @@ fun TextFieldComponent(
             keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),
             keyboardActions = keyBoardActions,
             enabled = isEnabled,
-            colors = TextFieldDefaults.outlinedTextFieldColors(),
+            colors = OutlinedTextFieldDefaults.colors(),
             isError = hasError,
             label = {
                 Text(
@@ -78,65 +80,9 @@ fun TextFieldComponent(
             Text(
                 text = errorText.joinToString("\n"),
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                style = TextStyle.Default.copy(color = MaterialTheme.colors.error)
+                style = TextStyle.Default.copy(color = MaterialTheme.colorScheme.error)
             )
         }
     }
 }
 
-@Preview
-@Composable
-fun FormTextFieldPreview() {
-    Surface {
-        Column {
-            TextFieldComponent(
-                modifier = Modifier.padding(bottom = 8.dp),
-                text = "My Value",
-                label = "My Label",
-                onChange = {},
-                keyBoardActions = KeyboardActions.Default,
-                isEnabled = true,
-            )
-            TextFieldComponent(
-                modifier = Modifier.padding(bottom = 8.dp),
-                text = "",
-                label = "My Label",
-                onChange = {},
-                keyBoardActions = KeyboardActions.Default,
-                isEnabled = true,
-                hasError = true,
-                errorText = mutableListOf("Should not be empty.")
-            )
-            TextFieldComponent(
-                modifier = Modifier.padding(bottom = 8.dp),
-                text = "",
-                label = "My Label which is very very very long and should be ellipsized",
-                onChange = {},
-                keyBoardActions = KeyboardActions.Default,
-                isEnabled = true,
-                hasError = true,
-                errorText = mutableListOf("Should not be empty.")
-            )
-            TextFieldComponent(
-                modifier = Modifier.padding(bottom = 8.dp),
-                text = "My Picker",
-                label = "My Label",
-                onChange = {},
-                keyBoardActions = KeyboardActions.Default,
-                isEnabled = false,
-                isReadOnly = true,
-                trailingIcon = { Icon(Icons.Filled.KeyboardArrowDown, null) }
-            )
-            TextFieldComponent(
-                modifier = Modifier.padding(bottom = 8.dp),
-                text = "My Picker in Confirm",
-                label = "My Label",
-                onChange = {},
-                keyBoardActions = KeyboardActions.Default,
-                isEnabled = false,
-                isReadOnly = true,
-                trailingIcon = { Icon(Icons.Filled.KeyboardArrowDown, null) }
-            )
-        }
-    }
-}

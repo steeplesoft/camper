@@ -1,6 +1,5 @@
 package ch.benlu.composeform.fields
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,7 +10,6 @@ import ch.benlu.composeform.Field
 import ch.benlu.composeform.FieldState
 import ch.benlu.composeform.Form
 import ch.benlu.composeform.components.TextFieldComponent
-import java.util.*
 
 class TextField(
     label: String,
@@ -40,7 +38,6 @@ class TextField(
     /**
      * Returns a composable representing the DateField / Picker for this field
      */
-    @SuppressLint("NotConstructor")
     @Composable
     override fun Field() {
         this.updateComposableValue()

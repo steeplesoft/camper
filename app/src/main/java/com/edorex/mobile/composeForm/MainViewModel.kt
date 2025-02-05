@@ -15,7 +15,6 @@ class MainViewModel @Inject constructor(
 
     fun validate() {
         form.validate(true)
-        form.logRawValue()
         Log.d("MainViewModel", "Submit (form is valid: ${form.isValid})")
     }
 
