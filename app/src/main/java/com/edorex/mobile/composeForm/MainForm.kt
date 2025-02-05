@@ -20,8 +20,8 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
     }
 
     @FormField
-    val name = FieldState(
-        state = mutableStateOf<String?>(null),
+    val name = FieldState<String?>(
+        state = mutableStateOf(null),
         validators = mutableListOf(
             NotEmptyValidator(),
             MinLengthValidator(
@@ -32,13 +32,13 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
     )
 
     @FormField
-    val lastName = FieldState(
-        state = mutableStateOf<String?>(null)
+    val lastName = FieldState<String?>(
+        state = mutableStateOf(null)
     )
 
     @FormField
-    val password = FieldState(
-        state = mutableStateOf<String?>(null),
+    val password = FieldState<String?>(
+        state = mutableStateOf(null),
         validators = mutableListOf(
             NotEmptyValidator(),
             MinLengthValidator(
@@ -49,8 +49,8 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
     )
 
     @FormField
-    val passwordConfirm = FieldState(
-        state = mutableStateOf<String?>(null),
+    val passwordConfirm = FieldState<String?>(
+        state = mutableStateOf(null),
         isVisible = { password.state.value != null && password.state.value!!.isNotEmpty()  },
         validators = mutableListOf(
             IsEqualValidator({ password.state.value })
@@ -58,16 +58,16 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
     )
 
     @FormField
-    val email = FieldState(
-        state = mutableStateOf<String?>(null),
+    val email = FieldState<String?>(
+        state = mutableStateOf(null),
         validators = mutableListOf(
             EmailValidator()
         )
     )
 
     @FormField
-    val country = FieldState(
-        state = mutableStateOf<Country?>(null),
+    val country = FieldState<Country?>(
+        state = mutableStateOf(null),
         options = mutableListOf(
             Country(code = "CH", name = "Switzerland"),
             Country(code = "DE", name = "Germany"),
@@ -84,8 +84,8 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
     )
 
     @FormField
-    val countryNotSearchable = FieldState(
-        state = mutableStateOf<Country?>(null),
+    val countryNotSearchable = FieldState<Country?>(
+        state = mutableStateOf(null),
         options = mutableListOf(
             null,
             Country(code = "CH", name = "Switzerland"),
@@ -100,16 +100,16 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
     }
 
     @FormField
-    val startDate = FieldState(
-        state = mutableStateOf<LocalDate?>(LocalDate(1974, 12, 23)),
+    val startDate = FieldState<LocalDate?>(
+        state = mutableStateOf(LocalDate(1974, 12, 23)),
         validators = mutableListOf(
             NotEmptyValidator()
         )
     )
 
     @FormField
-    val endDate = FieldState(
-        state = mutableStateOf<LocalDate?>(null),
+    val endDate = FieldState<LocalDate?>(
+        state = mutableStateOf(null),
         validators = mutableListOf(
             NotEmptyValidator(),
             DateValidator(
@@ -120,8 +120,8 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
     )
 
     @FormField
-    val agreeWithTerms = FieldState(
-        state = mutableStateOf<Boolean?>(null),
+    val agreeWithTerms = FieldState<Boolean?>(
+        state = mutableStateOf(null),
         validators = mutableListOf(
             IsEqualValidator({ true })
         )

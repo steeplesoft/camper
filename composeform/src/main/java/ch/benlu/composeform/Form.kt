@@ -30,7 +30,6 @@ abstract class Form {
                     return@forEach
                 }
 
-                val value = fieldState.state?.value
                 val validators = fieldState.validators
 
                 var isFieldValid = true
@@ -38,15 +37,15 @@ abstract class Form {
                 // first clear all error text before validation
                 fieldState.errorText.clear()
 
-//                validators.forEach {
-//                    if (!it.validate(value)) {
-//                        isValid = false
-//                        isFieldValid = false
-//                        // add error text to fieldState
-//                        fieldState.errorText.add(it.errorText)
-//                    }
-//                }
-//                fieldState.isValid.value = isFieldValid
+                validators.forEach {
+                    if (!it.validate(fieldState.state.value)) {
+                        isValid = false
+                        isFieldValid = false
+                        // add error text to fieldState
+                        fieldState.errorText.add(it.errorText)
+                    }
+                }
+                fieldState.isValid.value = isFieldValid
 
                 // if we should ignore untouched fields, every field should be marked as changed
                 if (markAsChanged) {
