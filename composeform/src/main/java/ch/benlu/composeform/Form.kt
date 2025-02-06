@@ -30,7 +30,7 @@ abstract class Form {
                     return@forEach
                 }
 
-                val validators = fieldState.validators
+                val validators: List<Validator<Any?>> = (fieldState.validators as List<Validator<Any?>>)
 
                 var isFieldValid = true
 
