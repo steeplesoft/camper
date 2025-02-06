@@ -74,11 +74,29 @@ dependencies {
 }
 
 publishing {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    repositories {
+        maven {
+            credentials {
+                username properties.getProperty("project.repoUsername")
+                password properties.getProperty("project.repoPassword")
+            }
+            println("project.version = $version")
+            if (version.endsWith("-SNAPSHOT")) {
+                url properties.getProperty("project.snapshotUrl")
+            } else {
+                url properties.getProperty("project.releaseUrl")
+            }
+            println("url = $url")
+        }
+    }
     publications {
         release(MavenPublication) {
-            groupId = 'com.github.benjamin-luescher'
-            artifactId = 'compose-form'
-            version = '0.2.8'
+            groupId = maven_groupId
+            artifactId = maven_artifactId
+            version = version //'0.3.0-Fork-SNAPSHOT'
 
             afterEvaluate {
                 from components.release
