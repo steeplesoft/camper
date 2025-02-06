@@ -30,6 +30,7 @@ abstract class Form {
                     return@forEach
                 }
 
+                @Suppress("UNCHECKED_CAST")
                 val validators: List<Validator<Any?>> = (fieldState.validators as List<Validator<Any?>>)
 
                 var isFieldValid = true
