@@ -1,7 +1,6 @@
-import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -11,8 +10,9 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
 }
 
-group = "io.github.kotlin"
-version = "1.0.0"
+val group = "com.github.benjamin-luescher"
+val artifact = "compose-form"
+val version = "0.3.0-Fork-SNAPSHOT"
 
 kotlin {
     jvm()
@@ -65,35 +65,48 @@ android {
 }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishing {
+        val localProps = gradleLocalProperties(rootDir, providers)
+        repositories {
+            maven {
+                credentials {
+                    username = localProps["project.repoUsername"].toString()
+                    password = localProps["project.repoPassword"].toString()
+                }
+                println("project.version = $version")
+                if (version.toString().endsWith("-SNAPSHOT")) {
+                    url = uri(localProps["project.snapshotUrl"].toString())
+                } else {
+                    url = uri(localProps["project.releaseUrl"].toString())
+                }
+                println("url = $url")
+            }
+        }
+    }
 
     signAllPublications()
 
-    coordinates(group.toString(), "library", version.toString())
+    coordinates(group.toString(), artifact, version.toString())
 
     pom {
-        name = "My library"
-        description = "A library."
-        inceptionYear = "2024"
-        url = "https://github.com/kotlin/multiplatform-library-template/"
+        name = "Compose Form"
+        description = "This library provides an easy-to-use and customizable solution for building forms in Android Jetpack Compose."
+        inceptionYear = "2023"
+        url = "https://github.com/benjamin-luescher/compose-form"
         licenses {
             license {
-                name = "XXX"
-                url = "YYY"
-                distribution = "ZZZ"
+                name = "MIT"
             }
         }
         developers {
             developer {
-                id = "XXX"
-                name = "YYY"
-                url = "ZZZ"
+                id = "edorex-luescher"
             }
         }
         scm {
-            url = "XXX"
-            connection = "YYY"
-            developerConnection = "ZZZ"
+            url = "https://github.com/benjamin-luescher/compose-form"
+            connection = "scm:git:git@github.com:benjamin-luescher/compose-form.git"
+            developerConnection = "scm:git:git@github.com:benjamin-luescher/compose-form.git"
         }
     }
 }
