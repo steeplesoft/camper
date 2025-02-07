@@ -12,7 +12,7 @@ plugins {
 
 val group = "com.github.benjamin-luescher"
 val artifact = "compose-form"
-val version = "0.3.0"
+val version = "0.3.0-SNAPSHOT"
 
 kotlin {
     jvmToolchain(11)
