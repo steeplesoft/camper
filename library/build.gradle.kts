@@ -3,29 +3,51 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.compose.compiler)
 }
 
 val group = "com.github.benjamin-luescher"
 val artifact = "compose-form"
-val version = "0.3.0-Fork-SNAPSHOT"
+val version = "0.3.0"
 
 kotlin {
+    jvmToolchain(11)
     jvm()
     androidTarget {
-        publishLibraryVariants("release")
+        publishLibraryVariants("release", "debug")
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_1_8)
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.compilations {
+            val main by getting {
+            }
+        }
+    }
+
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
+//    sourceSets.all {
+//        val suffixIndex = name.indexOfLast { it.isUpperCase() }
+//        val targetName = name.substring(0, suffixIndex)
+//        val suffix = name.substring(suffixIndex).lowercase().takeIf { it != "main" }
+//        println("SOURCE_SET: $name")
+//        kotlin.srcDir("$targetName/${suffix ?: "src"}")
+//        resources.srcDir("$targetName/${suffix?.let { it + "Resources" } ?: "resources"}")
+//    }
 
     sourceSets {
         val commonMain by getting {
@@ -44,23 +66,62 @@ kotlin {
                 implementation(libs.kotlin.test)
             }
         }
-
-        iosMain.dependencies {
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.runtime)
-            implementation(compose.ui)
-            implementation(compose.materialIconsExtended)
+        val jvmMain by getting {
         }
-
+        val jvmTest by getting
+        val androidMain by getting {
+            dependsOn(commonMain)
+        }
+        val androidUnitTest by getting {
+            dependsOn(commonTest)
+        }
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+        }
+        val iosX64Test by getting
+        val iosArm64Test by getting
+        val iosSimulatorArm64Test by getting
+        val iosTest by creating {
+            dependsOn(commonTest)
+            iosX64Test.dependsOn(this)
+            iosArm64Test.dependsOn(this)
+            iosSimulatorArm64Test.dependsOn(this)
+        }
     }
 }
 
 android {
-    namespace = "org.jetbrains.kotlinx.multiplatform.library.template"
+    namespace = "ch.benlu.composeform"
+    buildToolsVersion = "35.0.0"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/INDEX.LIST"
+
+        }
+    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        compose = true
     }
 }
 
@@ -84,13 +145,12 @@ mavenPublishing {
         }
     }
 
-    signAllPublications()
-
     coordinates(group.toString(), artifact, version.toString())
 
     pom {
         name = "Compose Form"
-        description = "This library provides an easy-to-use and customizable solution for building forms in Android Jetpack Compose."
+        description =
+            "This library provides an easy-to-use and customizable solution for building forms in Android Jetpack Compose."
         inceptionYear = "2023"
         url = "https://github.com/benjamin-luescher/compose-form"
         licenses {
