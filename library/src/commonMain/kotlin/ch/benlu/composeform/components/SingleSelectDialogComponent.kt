@@ -38,7 +38,8 @@ fun <T> SingleSelectDialogComponent(
     onSubmitButtonClick: (T?) -> Unit,
     onDismissRequest: () -> Unit,
     optionItemFormatter: ((T?) -> String)? = null,
-    search: ((options: MutableList<T?>, query: String) -> List<T?>)? = null
+    search: ((options: MutableList<T?>, query: String) -> List<T?>)? = null,
+    submitOnSelect: Boolean = false
 ) {
 
     val selectedOption =
@@ -90,6 +91,9 @@ fun <T> SingleSelectDialogComponent(
                         ) { selectedValue ->
                             selectedOption.intValue =
                                 optionsList.indexOfFirst { o -> o == selectedValue }
+                            if (submitOnSelect) {
+                                onSubmitButtonClick.invoke(selectedValue)
+                            }
                         }
                     }
                 }

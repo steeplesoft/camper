@@ -32,6 +32,7 @@ class PickerField<T: PickerValue>(
     imeAction: ImeAction = ImeAction.Next,
     formatter: ((raw: T?) -> String)? = null,
     private val isSearchable: Boolean = true,
+    private val submitOnSelect: Boolean = false,
     changed: ((v: T?) -> Unit)? = null
 ) : Field<T>(
     label = label,
@@ -82,6 +83,7 @@ class PickerField<T: PickerValue>(
                 optionItemFormatter = fieldState.optionItemFormatter,
                 defaultSelected = fieldState.state.value,
                 submitButtonText = "OK",
+                submitOnSelect = submitOnSelect,
                 onSubmitButtonClick = {
                     isDialogVisible = false
                     this.onChange(it, form)

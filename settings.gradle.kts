@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "compose-form"
 include(":library")
+include(":app:composeApp")
