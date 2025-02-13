@@ -4,7 +4,7 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.compose.compiler)
@@ -39,15 +39,6 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
-
-//    sourceSets.all {
-//        val suffixIndex = name.indexOfLast { it.isUpperCase() }
-//        val targetName = name.substring(0, suffixIndex)
-//        val suffix = name.substring(suffixIndex).lowercase().takeIf { it != "main" }
-//        println("SOURCE_SET: $name")
-//        kotlin.srcDir("$targetName/${suffix ?: "src"}")
-//        resources.srcDir("$targetName/${suffix?.let { it + "Resources" } ?: "resources"}")
-//    }
 
     sourceSets {
         val commonMain by getting {
@@ -170,3 +161,7 @@ mavenPublishing {
         }
     }
 }
+
+//build.finalizedBy(publishToMavenLocal)
+tasks.named("build") { finalizedBy("publishToMavenLocal") }
+tasks.named("assemble") { finalizedBy("publishToMavenLocal") }
