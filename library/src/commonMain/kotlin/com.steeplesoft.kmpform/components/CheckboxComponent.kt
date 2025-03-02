@@ -1,4 +1,4 @@
-package ch.benlu.composeform.components
+package com.steeplesoft.kmpform.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

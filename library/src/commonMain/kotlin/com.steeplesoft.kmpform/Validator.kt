@@ -1,4 +1,4 @@
-package ch.benlu.composeform
+package com.steeplesoft.kmpform
 
 abstract class Validator<T>(
     val validate: (s: T?) -> Boolean,

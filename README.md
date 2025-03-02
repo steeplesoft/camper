@@ -1,12 +1,17 @@
-# Android Compose Form Library
+
+> This is a Kotlin Multiplatform compatible fork of https://github.com/benjamin-luescher/compose-form
+> To make the separation clean, I have change the project name and package.
+
+# Android KMP Form Library
 ![https://jitpack.io/#benjamin-luescher/compose-form](https://jitpack.io/v/benjamin-luescher/compose-form.svg)
 
-This library provides an easy-to-use and customizable solution for building forms in Android Jetpack Compose. It includes form fields such as text input, pickers, checkbox, and more, with built-in validators to ensure accurate user input. Data binding is also supported, making it easy to work with form data in your code.
+This library provides an easy-to-use and customizable solution for building forms in Kotlin Multiplatform. It includes form fields such as text input, pickers, checkbox, and more, with built-in validators to ensure accurate user input. Data binding is also supported, making it easy to work with form data in your code.
 
-The library uses reflection, to provide more flexibility in your form design. Whether you're building a complex registration form or a simple feedback form, this library has you covered.
+Whether you're building a complex registration form or a simple feedback form, this library has you covered.
 
-![ComposeForm](/images/logo.png "ComposeForm")
+![KmpForm](/images/logo.png "KmpForm")
 
+# TODO: Update with KMP gradle instructions
 ## Getting Started
 To start using the library in your Android Compose project, follow these steps:
 1. Add the JitPack repository to your settings.gradle file
@@ -23,20 +28,22 @@ dependencyResolutionManagement {
 
 2. Add the dependency in your build.gradle file.
 ```kotlin
-implementation 'com.github.benjamin-luescher:compose-form:0.2.8'
+implementation 'com.steeplesoft:kmp-form:0.3.0-SNAPSHOT'
 ```
 
 ## Easy example
 In a first example we create a simple form with two text fields. The form will look like this:
 
-![ComposeForm Simple](/screenshots/png/simple-form.png "Simple Form")
+![KmpForm Simple](/screenshots/png/simple-form.png "Simple Form")
 
 1. Create a your form class with your form field annotations (`@FormField`)
 ```kotlin
-class MainForm(resourcesProvider: ResourcesProvider): Form() {
+class MainForm(): Form() {
     override fun self(): Form {
         return this
     }
+
+    override fun getFormFields() = listOf(name, lastName)
 
     @FormField
     val name = FieldState(
@@ -50,6 +57,7 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
     )
 }
 ```
+# TODO - Hilt-free example
 2. Create a ViewModel for your form.
 ```kotlin
 @HiltViewModel
@@ -72,7 +80,7 @@ Column {
         form = viewModel.form,
         fieldState = viewModel.form.name,
     ).Field()
-    
+
     TextField(
         label = "Last Name",
         form = viewModel.form,
@@ -82,10 +90,10 @@ Column {
 ```
 
 ## Extended Form example
-We now try to make a more complex form with different validators, date fields, password fields and 
+We now try to make a more complex form with different validators, date fields, password fields and
 searchable pickers. This is how the form will look like:
 
-![ComposeForm Extended](/screenshots/gif/composeform-extended.gif "Extended Form")
+![KmpForm Extended](/screenshots/gif/KmpForm-extended.gif "Extended Form")
 
 1. Create a form class with form fields. Define form fields by the `@FormField` annotation.
 ```kotlin
@@ -103,6 +111,9 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
     override fun self(): Form {
         return this
     }
+
+    override fun getFormFields() = listOf(name, lastName, password, passwordConfirm, email,
+        country, startDate, endDate, agreeWithTerms)
 
     @FormField
     val name = FieldState(
@@ -219,7 +230,7 @@ Column {
         form = viewModel.form,
         fieldState = viewModel.form.name,
     ).Field()
-    
+
     TextField(
         modifier = Modifier.padding(bottom = 8.dp),
         label = "E-Mail",
@@ -227,21 +238,21 @@ Column {
         fieldState = viewModel.form.email,
         keyboardType = KeyboardType.Email
     ).Field()
-    
+
     PasswordField(
         modifier = Modifier.padding(bottom = 8.dp),
         label = "Password",
         form = viewModel.form,
         fieldState = viewModel.form.password
     ).Field()
-    
+
     PasswordField(
         modifier = Modifier.padding(bottom = 8.dp),
         label = "Password Confirm",
         form = viewModel.form,
         fieldState = viewModel.form.passwordConfirm
     ).Field()
-    
+
     TextField(
         modifier = Modifier.padding(bottom = 8.dp),
         label = "Last Name",
@@ -249,14 +260,14 @@ Column {
         fieldState = viewModel.form.lastName,
         isEnabled = false,
     ).Field()
-    
+
     PickerField(
         modifier = Modifier.padding(bottom = 8.dp),
         label = "Country",
         form = viewModel.form,
         fieldState = viewModel.form.country
     ).Field()
-    
+
     DateField(
         modifier = Modifier.padding(bottom = 8.dp),
         label = "Start Date",
@@ -264,7 +275,7 @@ Column {
         fieldState = viewModel.form.startDate,
         formatter = ::dateShort
     ).Field()
-    
+
     DateField(
         modifier = Modifier.padding(bottom = 8.dp),
         label = "End Date",
@@ -272,7 +283,7 @@ Column {
         fieldState = viewModel.form.endDate,
         formatter = ::dateLong
     ).Field()
-    
+
     CheckboxField(
         modifier = Modifier.padding(bottom = 8.dp),
         fieldState = viewModel.form.agreeWithTerms,

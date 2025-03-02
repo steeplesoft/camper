@@ -1,4 +1,4 @@
-package ch.benlu.composeform.formatters
+package com.steeplesoft.kmpform.formatters
 
 fun upperCase(r: String?): String {
     return r?.uppercase() ?: ""

@@ -1,12 +1,12 @@
-package ch.benlu.composeform.fields
+package com.steeplesoft.kmpform.fields
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
-import ch.benlu.composeform.Field
-import ch.benlu.composeform.FieldState
-import ch.benlu.composeform.Form
-import ch.benlu.composeform.components.CheckboxComponent
+import com.steeplesoft.kmpform.Field
+import com.steeplesoft.kmpform.FieldState
+import com.steeplesoft.kmpform.Form
+import com.steeplesoft.kmpform.components.CheckboxComponent
 
 class CheckboxField(
     label: String,

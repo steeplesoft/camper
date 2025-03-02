@@ -1,4 +1,4 @@
-package ch.benlu.composeform.components
+package com.steeplesoft.kmpform.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

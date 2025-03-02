@@ -1,4 +1,4 @@
-package ch.benlu.composeform.fields
+package com.steeplesoft.kmpform.fields
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Icon
@@ -16,10 +16,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import ch.benlu.composeform.Field
-import ch.benlu.composeform.FieldState
-import ch.benlu.composeform.Form
-import ch.benlu.composeform.components.TextFieldComponent
+import com.steeplesoft.kmpform.Field
+import com.steeplesoft.kmpform.FieldState
+import com.steeplesoft.kmpform.Form
+import com.steeplesoft.kmpform.components.TextFieldComponent
 
 class PasswordField(
     label: String,

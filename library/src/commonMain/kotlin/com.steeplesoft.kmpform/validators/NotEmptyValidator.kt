@@ -1,6 +1,6 @@
-package ch.benlu.composeform.validators
+package com.steeplesoft.kmpform.validators
 
-import ch.benlu.composeform.Validator
+import com.steeplesoft.kmpform.Validator
 
 class NotEmptyValidator<T>(errorText: String? = null) : Validator<T>(
     validate = {

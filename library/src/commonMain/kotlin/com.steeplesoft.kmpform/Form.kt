@@ -1,4 +1,4 @@
-package ch.benlu.composeform
+package com.steeplesoft.kmpform
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

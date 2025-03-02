@@ -1,4 +1,4 @@
-package ch.benlu.composeform
+package com.steeplesoft.kmpform
 
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)

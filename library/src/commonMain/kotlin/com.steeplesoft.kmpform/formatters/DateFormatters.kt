@@ -1,4 +1,4 @@
-package ch.benlu.composeform.formatters
+package com.steeplesoft.kmpform.formatters
 
 import kotlinx.datetime.LocalDate
 

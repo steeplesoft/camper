@@ -1,4 +1,4 @@
-package ch.benlu.composeform.fields
+package com.steeplesoft.kmpform.fields
 
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,10 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.ImeAction
-import ch.benlu.composeform.Field
-import ch.benlu.composeform.FieldState
-import ch.benlu.composeform.Form
-import ch.benlu.composeform.components.TextFieldComponent
+import com.steeplesoft.kmpform.Field
+import com.steeplesoft.kmpform.FieldState
+import com.steeplesoft.kmpform.Form
+import com.steeplesoft.kmpform.components.TextFieldComponent
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -34,6 +34,7 @@ class DateField(
     imeAction: ImeAction = ImeAction.Next,
     formatter: ((raw: LocalDate?) -> String)? = null,
     private val themeResId: Int = 0,
+    private val submitOnSelect: Boolean = false,
     changed: ((v: LocalDate?) -> Unit)? = null
 ) : Field<LocalDate>(
     label = label,
@@ -59,7 +60,6 @@ class DateField(
 
         val openDialog = remember { mutableStateOf(false) }
 
-
         val focusRequester = FocusRequester()
 
         val calendar = value.value ?: LocalDate.now()
@@ -68,7 +68,6 @@ class DateField(
         if (openDialog.value) {
             val datePickerState = rememberDatePickerState(
                 initialSelectedDateMillis = calendar.toEpochDays() * 86400000L
-//                    Clock.System.now().toEpochMilliseconds()
             )
 
 

@@ -1,7 +1,7 @@
-package ch.benlu.composeform.validators
+package com.steeplesoft.kmpform.validators
 
-import ch.benlu.composeform.Validator
-import ch.benlu.composeform.fields.MIN
+import com.steeplesoft.kmpform.Validator
+import com.steeplesoft.kmpform.fields.MIN
 import kotlinx.datetime.LocalDate
 
 class DateValidator(minDateTime: () -> LocalDate, errorText: String? = null) : Validator<LocalDate?>(

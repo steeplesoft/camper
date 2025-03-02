@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "compose-form"
+rootProject.name = "kmp-form"
 include(":library")
-include(":app:composeApp")
+//include(":app:composeApp")
