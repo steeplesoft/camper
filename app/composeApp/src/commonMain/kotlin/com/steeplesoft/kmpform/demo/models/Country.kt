@@ -1,6 +1,6 @@
-package com.edorex.mobile.composeForm.models
+package com.steeplesoft.kmpform.demo.models
 
-import ch.benlu.composeform.fields.PickerValue
+import com.steeplesoft.kmpform.fields.PickerValue
 
 data class Country(
     val code: String,

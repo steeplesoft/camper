@@ -1,4 +1,4 @@
-package com.edorex.mobile.composeForm
+package com.steeplesoft.kmpform.demo
 
 import androidx.compose.ui.window.ComposeUIViewController
 

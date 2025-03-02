@@ -1,4 +1,4 @@
-package com.edorex.mobile.composeForm
+package com.steeplesoft.kmpform.demo
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,13 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import ch.benlu.composeform.fields.CheckboxField
-import ch.benlu.composeform.fields.DateField
-import ch.benlu.composeform.fields.PasswordField
-import ch.benlu.composeform.fields.PickerField
-import ch.benlu.composeform.fields.TextField
-import ch.benlu.composeform.formatters.dateLong
-import ch.benlu.composeform.formatters.dateShort
+import com.steeplesoft.kmpform.fields.CheckboxField
+import com.steeplesoft.kmpform.fields.DateField
+import com.steeplesoft.kmpform.fields.PasswordField
+import com.steeplesoft.kmpform.fields.PickerField
+import com.steeplesoft.kmpform.fields.TextField
+import com.steeplesoft.kmpform.formatters.dateLong
+import com.steeplesoft.kmpform.formatters.dateShort
 
 @Composable
 fun App() {

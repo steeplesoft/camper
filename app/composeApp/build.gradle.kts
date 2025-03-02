@@ -1,5 +1,4 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -11,7 +10,6 @@ plugins {
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -23,7 +21,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = "KmpForm"
             isStatic = true
         }
     }
@@ -47,7 +45,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
-            implementation(libs.compose.form)
+            implementation(project(":library"))
             implementation(libs.kotlinx.datetime)
 
         }
@@ -59,11 +57,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.edorex.mobile.composeForm"
+    namespace = "com.steeplesoft.kmpform.demo.KmpForm"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.edorex.mobile.composeform"
+        applicationId = "com.steeplesoft.kmpform.demo.kmpform"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -91,11 +89,11 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "com.edorex.mobile.composeform.MainKt"
+        mainClass = "com.steeplesoft.kmpform.demo.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.edorex.mobile.composeform"
+            packageName = "com.steeplesoft.kmpform.demo"
             packageVersion = "1.0.0"
         }
     }

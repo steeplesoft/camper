@@ -3,7 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import com.android.tools.r8.internal.fi
 import com.vanniktech.maven.publish.SonatypeHost
+import org.bouncycastle.cms.RecipientId.password
 import kotlin.math.sign
+import kotlin.text.Typography.copyright
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -11,6 +13,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.jreleaser)
 
     id ("signing")
 }
@@ -121,12 +124,8 @@ android {
     }
 }
 
-//signing {
-//    sign publishing.publications.release
-//}
-
 mavenPublishing {
-    coordinates(group, artifact, version.toString())
+    coordinates(group, artifact, version)
 
     pom {
         name = "KMP Form"
@@ -154,24 +153,68 @@ mavenPublishing {
         }
     }
 
+//    signAllPublications()
+
     publishing {
-//        val localProps = gradleLocalProperties(rootDir, providers)
+        val localProps = gradleLocalProperties(rootDir, providers)
         repositories {
             maven {
-                if (version.endsWith("SNAPSHOT")) {
-                    url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+                credentials {
+                    username = localProps["project.repoUsername"].toString()
+                    password = localProps["project.repoPassword"].toString()
+                }
+                println("project.version = $version")
+                if (version.toString().endsWith("-SNAPSHOT")) {
+                    url = uri(localProps["project.snapshotUrl"].toString())
+                } else {
+                    url = uri(localProps["project.releaseUrl"].toString())
                 }
                 println("url = $url")
             }
+            maven {
+                name = "PreDeploy"
+                url = uri(layout.buildDirectory.dir("pre-deploy"))
+            }
         }
     }
-
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-    signAllPublications()
-
-
 }
 
 //build.finalizedBy(publishToMavenLocal)
 tasks.named("build") { finalizedBy("publishToMavenLocal") }
 tasks.named("assemble") { finalizedBy("publishToMavenLocal") }
+
+/*
+jreleaser {
+    project {
+        copyright = "jora.dev"
+        description = "Gradle Publish Boilerplate project setup"
+    }
+    signing {
+        setActive("ALWAYS")
+        armored = true
+        setMode ("FILE")
+        publicKey = "public.key"
+        secretKey = "private.key"
+    }
+    deploy {
+        maven {
+            mavenCentral {
+                setActive("ALWAYS")
+                create("sonatype") {
+                    setActive("ALWAYS")
+                    url = "https://central.sonatype.com/api/v1/publisher"
+                    stagingRepository("build/staging-deploy")
+//                    setUserName (findProperty("mavenCentralUsername") ?: System.getenv("OSSRH_USERNAME"))
+//                    password = findProperty("mavenCentralPassword") ?: System.getenv("OSSRH_PASSWORD")
+                    stagingRepository("build/pre-deploy")
+                }
+            }
+        }
+    }
+    release {
+        github {
+            enabled = false
+        }
+    }
+}
+*/

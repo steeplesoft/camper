@@ -1,10 +1,16 @@
-package com.edorex.mobile.composeForm
+package com.steeplesoft.kmpform.demo
 
 import androidx.compose.runtime.mutableStateOf
-import ch.benlu.composeform.*
-import ch.benlu.composeform.fields.MIN
-import ch.benlu.composeform.validators.*
-import com.edorex.mobile.composeForm.models.Country
+import com.steeplesoft.kmpform.FieldState
+import com.steeplesoft.kmpform.Form
+import com.steeplesoft.kmpform.FormField
+import com.steeplesoft.kmpform.demo.models.Country
+import com.steeplesoft.kmpform.fields.MIN
+import com.steeplesoft.kmpform.validators.DateValidator
+import com.steeplesoft.kmpform.validators.EmailValidator
+import com.steeplesoft.kmpform.validators.IsEqualValidator
+import com.steeplesoft.kmpform.validators.MinLengthValidator
+import com.steeplesoft.kmpform.validators.NotEmptyValidator
 import kotlinx.datetime.LocalDate
 
 class MainForm: Form() {
