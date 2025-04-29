@@ -11,8 +11,6 @@ compose-multiplatform = "1.7.3"
 androidx-activityCompose = "1.9.3"
 androidx-lifecycle = "2.8.4"
 kotlinx-coroutines = "1.10.1"
-kmpForm = "0.3.0-SNAPSHOT"
-jreleaser = "1.17.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -21,7 +19,6 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
-kmp-form = { module = "com.steeplesoft:kmp-form", version.ref = "kmpForm" }
 
 
 [plugins]
@@ -31,4 +28,3 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.29.0" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
-jreleaser = { id = "org.jreleaser", version.ref="jreleaser" }
