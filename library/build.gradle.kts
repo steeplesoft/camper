@@ -13,14 +13,13 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.jreleaser)
 
     id ("signing")
 }
 
 val group = "com.steeplesoft"
 val artifact = "kmp-form"
-val version = libs.versions.kmpForm.get() //"0.3.0-SNAPSHOT"
+val version = "0.3.0"
 
 kotlin {
     jvmToolchain(11)
@@ -37,6 +36,10 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
+        it.binaries.framework {
+            baseName = "kmpform"
+            isStatic = true
+        }
         it.compilations {
             val main by getting {
             }
@@ -130,7 +133,10 @@ mavenPublishing {
     pom {
         name = "KMP Form"
         description =
-            "This library provides an easy-to-use and customizable solution for building forms in Kotlin Multiplatform applications."
+            """
+                |This library provides an easy-to-use and customizable solution for building forms in Kotlin Multiplatform applications.
+                |This project is a fork of https://github.com/benjamin-luescher/compose-form, which appears to be abandoned."
+            """.trimMargin()
         inceptionYear = "2023"
         url = "https://github.com/steeplesoft/kmp-form"
         licenses {
@@ -153,68 +159,12 @@ mavenPublishing {
         }
     }
 
-//    signAllPublications()
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
 
-    publishing {
-        val localProps = gradleLocalProperties(rootDir, providers)
-        repositories {
-            maven {
-                credentials {
-                    username = localProps["project.repoUsername"].toString()
-                    password = localProps["project.repoPassword"].toString()
-                }
-                println("project.version = $version")
-                if (version.toString().endsWith("-SNAPSHOT")) {
-                    url = uri(localProps["project.snapshotUrl"].toString())
-                } else {
-                    url = uri(localProps["project.releaseUrl"].toString())
-                }
-                println("url = $url")
-            }
-            maven {
-                name = "PreDeploy"
-                url = uri(layout.buildDirectory.dir("pre-deploy"))
-            }
-        }
-    }
+    signAllPublications()
 }
 
 //build.finalizedBy(publishToMavenLocal)
 tasks.named("build") { finalizedBy("publishToMavenLocal") }
 tasks.named("assemble") { finalizedBy("publishToMavenLocal") }
 
-/*
-jreleaser {
-    project {
-        copyright = "jora.dev"
-        description = "Gradle Publish Boilerplate project setup"
-    }
-    signing {
-        setActive("ALWAYS")
-        armored = true
-        setMode ("FILE")
-        publicKey = "public.key"
-        secretKey = "private.key"
-    }
-    deploy {
-        maven {
-            mavenCentral {
-                setActive("ALWAYS")
-                create("sonatype") {
-                    setActive("ALWAYS")
-                    url = "https://central.sonatype.com/api/v1/publisher"
-                    stagingRepository("build/staging-deploy")
-//                    setUserName (findProperty("mavenCentralUsername") ?: System.getenv("OSSRH_USERNAME"))
-//                    password = findProperty("mavenCentralPassword") ?: System.getenv("OSSRH_PASSWORD")
-                    stagingRepository("build/pre-deploy")
-                }
-            }
-        }
-    }
-    release {
-        github {
-            enabled = false
-        }
-    }
-}
-*/
