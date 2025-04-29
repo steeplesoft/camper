@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="11">
       <module name="compose-form.app.composeApp" target="17" />
+      <module name="kmp-form.app.composeApp" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
