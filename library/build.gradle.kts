@@ -19,7 +19,7 @@ plugins {
 
 val group = "com.steeplesoft"
 val artifact = "kmp-form"
-val version = "0.3.1-SNAPSHOT"
+val version = "0.3.1"
 
 kotlin {
     jvmToolchain(11)
