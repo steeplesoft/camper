@@ -38,6 +38,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "kmpform"
+            binaryOption("bundleId", "com.steeplesoft.kmpform")
             isStatic = true
         }
         it.compilations {

@@ -21,7 +21,8 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "KmpForm"
+            baseName = "KmpFormDemo"
+            binaryOption("bundleId", "com.steeplesoft.kmpform.demo")
             isStatic = true
         }
     }
