@@ -160,6 +160,24 @@ mavenPublishing {
         }
     }
 
+    publishing {
+        val localProps = gradleLocalProperties(rootDir, providers)
+        repositories {
+            maven {
+                name = "Steeplesoft"
+                credentials {
+                    username = localProps["project.repoUsername"].toString()
+                    password = localProps["project.repoPassword"].toString()
+                }
+                url = if (version.toString().endsWith("-SNAPSHOT")) {
+                    uri(localProps["project.snapshotUrl"].toString())
+                } else {
+                    uri(localProps["project.releaseUrl"].toString())
+                }
+            }
+        }
+    }
+
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
 
     signAllPublications()
