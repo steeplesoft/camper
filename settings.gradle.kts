@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kmp-form"
+rootProject.name = "camper"
 include(":library")
-include(":app:composeApp")
+//include(":app:composeApp")

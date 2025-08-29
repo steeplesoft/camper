@@ -28,7 +28,7 @@ dependencyResolutionManagement {
 
 2. Add the dependency in your build.gradle file.
 ```kotlin
-implementation 'com.steeplesoft:kmp-form:0.3.0-SNAPSHOT'
+implementation 'com.steeplesoft:camper:0.3.0-SNAPSHOT'
 ```
 
 ## Easy example

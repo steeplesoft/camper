@@ -1,19 +1,20 @@
 [versions]
-agp = "8.10.0"
-kotlin = "2.1.20"
-android-minSdk = "24"
+agp = "8.11.1"
 android-compileSdk = "35"
-android-targetSdk = "34"
-kotlinxDatetime = "0.6.2"
-material3 = "1.3.1"
-compose-plugin = "1.7.0"
-compose-multiplatform = "1.8.0"
+android-minSdk = "24"
+android-targetSdk = "35"
 androidx-activityCompose = "1.10.1"
-androidx-lifecycle = "2.8.4"
-kotlinx-coroutines = "1.10.1"
+androidx-lifecycle = "2.9.2"
+compose-multiplatform = "1.9.0-beta03"
+compose-plugin = "1.7.0"
+kotlin = "2.2.10"
+kotlinx-coroutines = "1.10.2"
+kotlinxDatetime = "0.7.1"
+material3 = "1.3.1"
+vannitech = "0.34.0"
 
 [libraries]
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+#kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
@@ -26,5 +27,5 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.29.0" }
+vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vannitech" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }

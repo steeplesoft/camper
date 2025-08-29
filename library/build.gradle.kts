@@ -1,11 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import com.android.tools.r8.internal.fi
-import com.vanniktech.maven.publish.SonatypeHost
-import org.bouncycastle.cms.RecipientId.password
-import kotlin.math.sign
-import kotlin.text.Typography.copyright
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -18,7 +13,7 @@ plugins {
 }
 
 val group = "com.steeplesoft"
-val artifact = "kmp-form"
+val artifact = "camper"
 val version = "0.3.2-SNAPSHOT"
 
 kotlin {
@@ -37,8 +32,8 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "kmpform"
-            binaryOption("bundleId", "com.steeplesoft.kmpform")
+            baseName = "com.steeplesoft.camper"
+            binaryOption("bundleId", "com.steeplesoft.camper")
             isStatic = true
         }
         it.compilations {
@@ -58,6 +53,7 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.runtime)
                 implementation(compose.material3)
+                implementation("org.jetbrains.compose.material3:material3:1.9.0-alpha04")
                 implementation(compose.ui)
                 implementation(compose.materialIconsExtended)
 
@@ -66,7 +62,7 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation(libs.kotlin.test)
+//                implementation(libs.kotlin.test)
             }
         }
         val jvmMain by getting {
@@ -139,7 +135,7 @@ mavenPublishing {
                 |This project is a fork of https://github.com/benjamin-luescher/compose-form, which appears to be abandoned."
             """.trimMargin()
         inceptionYear = "2023"
-        url = "https://github.com/steeplesoft/kmp-form"
+        url = "https://github.com/steeplesoft/camper"
         licenses {
             license {
                 name = "MIT"
@@ -154,9 +150,9 @@ mavenPublishing {
             }
         }
         scm {
-            url = "https://github.com/steeplesoft/kmp-form"
-            connection = "scm:git:git@github.com:steeplesoft/kmp-form.git"
-            developerConnection = "scm:git:git@github.com:steeplesoft/kmp-form.git"
+            url = "https://github.com/steeplesoft/camper"
+            connection = "scm:git:git@github.com:steeplesoft/camper.git"
+            developerConnection = "scm:git:git@github.com:steeplesoft/camper.git"
         }
     }
 
@@ -178,12 +174,10 @@ mavenPublishing {
         }
     }
 
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishToMavenCentral()
 
     signAllPublications()
 }
 
-//build.finalizedBy(publishToMavenLocal)
 tasks.named("build") { finalizedBy("publishToMavenLocal") }
 tasks.named("assemble") { finalizedBy("publishToMavenLocal") }
-
