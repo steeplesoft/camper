@@ -22,7 +22,7 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "KmpFormDemo"
-            binaryOption("bundleId", "com.steeplesoft.kmpform.demo")
+            binaryOption("bundleId", "com.steeplesoft.camper.demo")
             isStatic = true
         }
     }
@@ -58,11 +58,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.steeplesoft.kmpform.demo.KmpForm"
+    namespace = "com.steeplesoft.camper.demo.KmpForm"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.steeplesoft.kmpform.demo.kmpform"
+        applicationId = "com.steeplesoft.camper.demo.kmpform"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -90,11 +90,11 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "com.steeplesoft.kmpform.demo.MainKt"
+        mainClass = "com.steeplesoft.camper.demo.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.steeplesoft.kmpform.demo"
+            packageName = "com.steeplesoft.camper.demo"
             packageVersion = "1.0.0"
         }
     }

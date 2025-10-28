@@ -1,16 +1,16 @@
-package com.steeplesoft.kmpform.demo
+package com.steeplesoft.camper.demo
 
 import androidx.compose.runtime.mutableStateOf
-import com.steeplesoft.kmpform.FieldState
-import com.steeplesoft.kmpform.Form
-import com.steeplesoft.kmpform.FormField
-import com.steeplesoft.kmpform.demo.models.Country
-import com.steeplesoft.kmpform.fields.MIN
-import com.steeplesoft.kmpform.validators.DateValidator
-import com.steeplesoft.kmpform.validators.EmailValidator
-import com.steeplesoft.kmpform.validators.IsEqualValidator
-import com.steeplesoft.kmpform.validators.MinLengthValidator
-import com.steeplesoft.kmpform.validators.NotEmptyValidator
+import com.steeplesoft.camper.FieldState
+import com.steeplesoft.camper.Form
+import com.steeplesoft.camper.FormField
+import com.steeplesoft.camper.demo.models.Country
+import com.steeplesoft.camper.fields.MIN
+import com.steeplesoft.camper.validators.DateValidator
+import com.steeplesoft.camper.validators.EmailValidator
+import com.steeplesoft.camper.validators.IsEqualValidator
+import com.steeplesoft.camper.validators.MinLengthValidator
+import com.steeplesoft.camper.validators.NotEmptyValidator
 import kotlinx.datetime.LocalDate
 
 class MainForm: Form() {

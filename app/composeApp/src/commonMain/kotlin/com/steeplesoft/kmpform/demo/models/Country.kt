@@ -1,6 +1,6 @@
-package com.steeplesoft.kmpform.demo.models
+package com.steeplesoft.camper.demo.models
 
-import com.steeplesoft.kmpform.fields.PickerValue
+import com.steeplesoft.camper.fields.PickerValue
 
 data class Country(
     val code: String,

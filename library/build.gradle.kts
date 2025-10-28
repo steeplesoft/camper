@@ -27,7 +27,6 @@ kotlin {
         }
     }
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
@@ -48,56 +47,38 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.foundation)
+        commonMain.dependencies {
                 implementation(compose.runtime)
+                implementation(compose.foundation)
                 implementation(compose.material3)
-                implementation("org.jetbrains.compose.material3:material3:1.9.0-alpha04")
-                implementation(compose.ui)
                 implementation(compose.materialIconsExtended)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
 
                 implementation(libs.kotlinx.datetime)
-            }
         }
-        val commonTest by getting {
-            dependencies {
+        commonTest.dependencies {
 //                implementation(libs.kotlin.test)
-            }
         }
-        val jvmMain by getting {
+        jvmMain.dependencies {
         }
-        val jvmTest by getting
-        val androidMain by getting {
-            dependsOn(commonMain)
+        jvmTest.dependencies {
         }
-        val androidUnitTest by getting {
-            dependsOn(commonTest)
+        androidMain.dependencies {
         }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+        androidUnitTest.dependencies {
         }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
+        iosMain.dependencies {
+        }
+        iosTest.dependencies {
         }
     }
 }
 
 android {
-    namespace = "com.steeplesoft.kmpform"
-    buildToolsVersion = "35.0.0"
+    namespace = "com.steeplesoft.camper"
+    buildToolsVersion = "36.0.0"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -128,7 +109,7 @@ mavenPublishing {
     coordinates(group, artifact, version)
 
     pom {
-        name = "KMP Form"
+        name = "Steeplesoft Camper"
         description =
             """
                 |This library provides an easy-to-use and customizable solution for building forms in Kotlin Multiplatform applications.

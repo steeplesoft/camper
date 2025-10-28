@@ -1,50 +1,38 @@
 package com.steeplesoft.camper.fields
 
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import com.steeplesoft.camper.Field
-import com.steeplesoft.camper.components.TextFieldComponent
+import com.steeplesoft.camper.FieldState
+import com.steeplesoft.camper.Form
+import com.steeplesoft.camper.components.SecuredTextFieldComponent
 
-class IntegerField(
+class SecuredTextField(
     label: String,
-    form: com.steeplesoft.camper.Form,
+    form: Form,
     modifier: Modifier? = Modifier,
-    fieldState: com.steeplesoft.camper.FieldState<Int?>,
+    fieldState: FieldState<String?>,
     isEnabled: Boolean = true,
     imeAction: ImeAction = ImeAction.Next,
+    formatter: ((raw: String?) -> String)? = null,
+    keyboardType: KeyboardType = KeyboardType.Text,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    changed: ((v: Int?) -> Unit)? = null
-) : Field<Int?>(
+    changed: ((v: String?) -> Unit)? = null
+) : Field<String>(
     label = label,
     form = form,
     fieldState = fieldState,
     isEnabled = isEnabled,
     modifier = modifier,
     imeAction = imeAction,
-    keyboardType = KeyboardType.Number,
+    formatter = formatter,
+    keyboardType = keyboardType,
     visualTransformation = visualTransformation,
     changed = changed
 ) {
-
-    fun onChange(v: String) {
-        try {
-            if (v.isNotEmpty()) {
-                this.value.value = v.toInt()
-                this.updateFormValue()
-
-                form.validate()
-                changed?.invoke(this.value.value)
-            } else {
-                fieldState.state.value = null
-                fieldState.hasChanges.value = true
-            }
-        } catch (nfe: NumberFormatException) {
-        }
-    }
 
     /**
      * Returns a composable representing the DateField / Picker for this field
@@ -56,20 +44,18 @@ class IntegerField(
             return
         }
 
-        TextFieldComponent(
+        SecuredTextFieldComponent(
             modifier = modifier ?: Modifier,
             imeAction = imeAction ?: ImeAction.Next,
             isEnabled = isEnabled,
-            keyBoardActions = KeyboardActions.Default,
             keyboardType = keyboardType,
             onChange = {
-                this.onChange(it)
+                this.onChange(it, form)
             },
             label = label,
-            text = (value.value?.toString() ?: ""),
+            text = formatter?.invoke(value.value) ?: (value.value ?: ""),
             hasError = fieldState.hasError(),
-            errorText = fieldState.errorText,
-            visualTransformation = visualTransformation
+            errorText = fieldState.errorText
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.steeplesoft.kmpform.demo
+package com.steeplesoft.camper.demo
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -1,4 +1,4 @@
-package com.steeplesoft.kmpform.demo
+package com.steeplesoft.camper.demo
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,13 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.steeplesoft.kmpform.fields.CheckboxField
-import com.steeplesoft.kmpform.fields.DateField
-import com.steeplesoft.kmpform.fields.PasswordField
-import com.steeplesoft.kmpform.fields.PickerField
-import com.steeplesoft.kmpform.fields.TextField
-import com.steeplesoft.kmpform.formatters.dateLong
-import com.steeplesoft.kmpform.formatters.dateShort
+import com.steeplesoft.camper.fields.CheckboxField
+import com.steeplesoft.camper.fields.DateField
+import com.steeplesoft.camper.fields.PasswordField
+import com.steeplesoft.camper.fields.PickerField
+import com.steeplesoft.camper.fields.TextField
+import com.steeplesoft.camper.formatters.dateLong
+import com.steeplesoft.camper.formatters.dateShort
 
 @Composable
 fun App() {

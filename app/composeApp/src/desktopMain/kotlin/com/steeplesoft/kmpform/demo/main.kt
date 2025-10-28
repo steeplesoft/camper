@@ -1,4 +1,4 @@
-package com.steeplesoft.kmpform.demo
+package com.steeplesoft.camper.demo
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
