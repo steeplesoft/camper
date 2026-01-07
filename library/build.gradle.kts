@@ -27,6 +27,7 @@ kotlin {
         }
     }
     listOf(
+        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
@@ -61,6 +62,7 @@ kotlin {
         commonTest.dependencies {
 //                implementation(libs.kotlin.test)
         }
+        /*
         jvmMain.dependencies {
         }
         jvmTest.dependencies {
@@ -69,10 +71,14 @@ kotlin {
         }
         androidUnitTest.dependencies {
         }
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
         iosMain.dependencies {
         }
         iosTest.dependencies {
         }
+        */
     }
 }
 

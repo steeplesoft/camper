@@ -66,6 +66,7 @@ fun SecuredTextFieldComponent(
                 }
             }
     }
+
     OutlinedSecureTextField(
         state = state,
         keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),
