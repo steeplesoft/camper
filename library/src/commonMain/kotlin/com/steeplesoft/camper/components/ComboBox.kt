@@ -52,6 +52,7 @@ fun <T> ComboBox(
             onValueChange = { },
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable { mExpanded = !mExpanded }
                 .onGloballyPositioned { coordinates ->
                     // This value is used to assign to the DropDown the same width
                     mTextFieldSize = coordinates.size.toSize()

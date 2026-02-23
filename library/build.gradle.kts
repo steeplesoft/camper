@@ -14,7 +14,7 @@ plugins {
 
 val group = "com.steeplesoft"
 val artifact = "camper"
-val version = "0.3.2-SNAPSHOT"
+val version = "0.3.3-SNAPSHOT"
 
 kotlin {
     jvmToolchain(11)
@@ -119,8 +119,7 @@ mavenPublishing {
         description =
             """
                 |This library provides an easy-to-use and customizable solution for building forms in Kotlin Multiplatform applications.
-                |This project is a fork of https://github.com/benjamin-luescher/compose-form, which appears to be abandoned."
-            """.trimMargin()
+                |This project is a fork of https://github.com/benjamin-luescher/compose-form, which appears to be abandoned.""".trimMargin()
         inceptionYear = "2023"
         url = "https://github.com/steeplesoft/camper"
         licenses {
