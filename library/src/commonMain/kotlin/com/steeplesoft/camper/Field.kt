@@ -29,12 +29,15 @@ abstract class Field<T> (
         @Suppress("UNCHECKED_CAST")
         this.value.value = v as T?
         this.updateFormValue()
-        form.validate()
+        form.validateField(this.fieldState)
         changed?.invoke(v)
     }
 
     fun updateComposableValue() {
-        this.value.value = fieldState.state.value
+        val newValue = fieldState.state.value
+        if (this.value.value != newValue) {
+            this.value.value = newValue
+        }
     }
 
     fun updateFormValue() {
@@ -42,6 +45,7 @@ abstract class Field<T> (
         fieldState.hasChanges.value = true
     }
 
+    @Suppress("NotConstructor")
     @Composable
     abstract fun Field()
 }

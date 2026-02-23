@@ -53,7 +53,7 @@ fun <T> SingleSelectDialogComponent(
         ) {
             Column {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text(text = title, style = MaterialTheme.typography.headlineSmall)
+                    Text(text = title, style = MaterialTheme.typography.headlineMedium)
 
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -76,8 +76,6 @@ fun <T> SingleSelectDialogComponent(
                 LazyColumn(
                     modifier = if (search != null) Modifier.height(240.dp) else Modifier.wrapContentHeight()
                 ) {
-                    item {
-                    }
                     items(
                         items = search?.invoke(optionsList, query.value) ?: optionsList,
                         key = { i ->

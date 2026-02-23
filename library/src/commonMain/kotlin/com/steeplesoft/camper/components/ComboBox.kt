@@ -52,15 +52,25 @@ fun <T> ComboBox(
             onValueChange = { },
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { mExpanded = !mExpanded }
                 .onGloballyPositioned { coordinates ->
                     // This value is used to assign to the DropDown the same width
                     mTextFieldSize = coordinates.size.toSize()
                 },
-            label = { Text(label) },
+            label = {
+                Text(
+                    text = label,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            mExpanded = !mExpanded
+                        })
+            },
             trailingIcon = {
-                Icon(icon, null,
-                    Modifier.clickable { mExpanded = !mExpanded })
+                Icon(
+                    icon, null,
+                    Modifier.clickable {
+                        mExpanded = !mExpanded
+                    })
             }
         )
 

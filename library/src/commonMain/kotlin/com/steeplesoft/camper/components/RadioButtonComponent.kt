@@ -40,7 +40,7 @@ fun <T>RadioButtonComponent(
         )
         Text(
             text = label,
-            style = MaterialTheme.typography.bodyMedium.merge(),
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier
                 .padding(8.dp)
                 .align(alignment = Alignment.CenterVertically)
