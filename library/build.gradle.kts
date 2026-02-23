@@ -3,11 +3,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.androidKmpLibrary)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.vanniktech.mavenPublish)
-    alias(libs.plugins.compose.compiler)
 
     id ("signing")
 }
@@ -17,17 +17,21 @@ val artifact = "camper"
 val version = "0.3.3-SNAPSHOT"
 
 kotlin {
-    jvmToolchain(11)
-    jvm()
-    androidTarget {
-        publishLibraryVariants("release", "debug")
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+    android {
+        namespace = "com.steeplesoft.camper"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        packaging {
+            resources {
+                excludes += "/META-INF/{AL2.0,LGPL2.1}"
+                excludes += "META-INF/INDEX.LIST"
+            }
         }
     }
+
+    compilerOptions {
+        languageVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_3
+    }
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
@@ -35,10 +39,6 @@ kotlin {
             baseName = "com.steeplesoft.camper"
             binaryOption("bundleId", "com.steeplesoft.camper")
             isStatic = true
-        }
-        it.compilations {
-            val main by getting {
-            }
         }
     }
 
@@ -49,67 +49,22 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.material.icons.extended)
+                implementation(libs.compose.ui)
+                implementation(libs.compose.components.resources)
+                implementation(libs.compose.uiToolingPreview)
 
                 implementation(libs.kotlinx.datetime)
         }
         commonTest.dependencies {
-//                implementation(libs.kotlin.test)
+            implementation(libs.kotlin.test)
         }
-        /*
-        jvmMain.dependencies {
-        }
-        jvmTest.dependencies {
-        }
-        androidMain.dependencies {
-        }
-        androidUnitTest.dependencies {
-        }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        iosMain.dependencies {
-        }
-        iosTest.dependencies {
-        }
-        */
     }
 }
 
-android {
-    namespace = "com.steeplesoft.camper"
-    buildToolsVersion = "36.0.0"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            excludes += "META-INF/INDEX.LIST"
-
-        }
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    buildFeatures {
-        compose = true
-    }
-}
 
 mavenPublishing {
     coordinates(group, artifact, version)
@@ -119,7 +74,7 @@ mavenPublishing {
         description =
             """
                 |This library provides an easy-to-use and customizable solution for building forms in Kotlin Multiplatform applications.
-                |This project is a fork of https://github.com/benjamin-luescher/compose-form, which appears to be abandoned.""".trimMargin()
+                |This project is a fork of https://github.com/benjamin-luescher/compose-form.""".trimMargin()
         inceptionYear = "2023"
         url = "https://github.com/steeplesoft/camper"
         licenses {
