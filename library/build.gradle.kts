@@ -58,8 +58,10 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.compose.ui.test)
         }
-        androidHostTest.dependencies {
-            implementation(libs.kotlin.test.junit)
+        getByName("androidHostTest") {
+            dependencies {
+                implementation(libs.kotlin.test.junit)
+            }
         }
     }
 }
@@ -105,7 +107,7 @@ mavenPublishing {
                     username = localProps["project.repoUsername"].toString()
                     password = localProps["project.repoPassword"].toString()
                 }
-                url = if (version.toString().endsWith("-SNAPSHOT")) {
+                url = if (version.endsWith("-SNAPSHOT")) {
                     uri(localProps["project.snapshotUrl"].toString())
                 } else {
                     uri(localProps["project.releaseUrl"].toString())
