@@ -31,19 +31,15 @@ class IntegerField(
 ) {
 
     fun onChange(v: String) {
-        try {
-            if (v.isNotEmpty()) {
-                this.value.value = v.toInt()
-                this.updateFormValue()
-
-                form.validate()
-                changed?.invoke(this.value.value)
-            } else {
-                fieldState.state.value = null
-                fieldState.hasChanges.value = true
-            }
-        } catch (nfe: NumberFormatException) {
+        if (v.isEmpty()) {
+            this.value.value = null
+        } else {
+            this.value.value = v.toIntOrNull() ?: return
         }
+
+        this.updateFormValue()
+        form.validateField(fieldState)
+        changed?.invoke(this.value.value)
     }
 
     /**
