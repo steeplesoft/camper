@@ -102,6 +102,25 @@ class FormTest {
     }
 
     @Test
+    fun validate_validatorThrows_marksFormInvalid() {
+        val throwingForm = object : Form() {
+            val value = FieldState(
+                state = mutableStateOf<String?>("value"),
+                validators = mutableListOf(
+                    object : Validator<String?>({ error("boom") }, "Invalid") {}
+                )
+            )
+
+            override fun getFormFields() = listOf(value)
+        }
+
+        throwingForm.validate()
+
+        assertFalse(throwingForm.isValid)
+        assertFalse(throwingForm.value.isValid.value)
+    }
+
+    @Test
     fun validate_clearsOldErrorsBeforeRevalidating() {
         form.validate()
         assertTrue(form.name.errorText.isNotEmpty())

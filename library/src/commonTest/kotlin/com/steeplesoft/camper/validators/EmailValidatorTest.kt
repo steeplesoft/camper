@@ -69,6 +69,11 @@ class EmailValidatorTest {
     }
 
     @Test
+    fun validate_withUppercaseAddress_returnsTrue() {
+        assertTrue(EmailValidator().validate("User@Example.COM"))
+    }
+
+    @Test
     fun validate_withValidEmailWithUnderscores_returnsTrue() {
         // Arrange
         val validator = EmailValidator()

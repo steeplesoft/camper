@@ -3,6 +3,7 @@ package com.steeplesoft.camper.validators
 import kotlin.test.DefaultAsserter.assertTrue
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 
 class MinLengthValidatorTest {
@@ -174,30 +175,10 @@ class MinLengthValidatorTest {
     }
 
     @Test
-    fun validate_withNegativeMinLength_alwaysReturnsTrue() {
-        // Arrange
-        val minLength = -1
-        val validator = MinLengthValidator(minLength)
-        val testString = "" // 0 characters > -1
-
-        // Act
-        val result = validator.validate(testString)
-
-        // Assert
-        assertTrue("Negative min length should allow any non-null string", result)
-    }
-
-    @Test
-    fun validate_withNegativeMinLengthAndNull_returnsTrue() {
-        // Arrange
-        val minLength = -1
-        val validator = MinLengthValidator(minLength)
-
-        // Act
-        val result = validator.validate(null)
-
-        // Assert
-        assertTrue("Null should pass validation with negative min length (null treated as length -1)", result)
+    fun constructor_withNegativeMinLength_throws() {
+        assertFailsWith<IllegalArgumentException> {
+            MinLengthValidator(-1)
+        }
     }
 
     @Test
