@@ -58,21 +58,8 @@ kotlin {
             implementation(kotlin("test"))
             implementation(libs.compose.ui.test)
         }
-        getByName("androidHostTest") {
-            dependencies {
-                implementation(libs.kotlin.test.junit)
-            }
-        }
     }
 }
-
-configurations.named("androidHostTestCompileClasspath") {
-    resolutionStrategy.dependencySubstitution {
-        substitute(module("org.jetbrains.kotlin:kotlin-test"))
-            .using(module("org.jetbrains.kotlin:kotlin-test-junit:${libs.versions.kotlin.get()}"))
-    }
-}
-
 
 mavenPublishing {
     coordinates(group, artifact, version)
