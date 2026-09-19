@@ -66,6 +66,13 @@ kotlin {
     }
 }
 
+configurations.named("androidHostTestCompileClasspath") {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("org.jetbrains.kotlin:kotlin-test"))
+            .using(module("org.jetbrains.kotlin:kotlin-test-junit:${libs.versions.kotlin.get()}"))
+    }
+}
+
 
 mavenPublishing {
     coordinates(group, artifact, version)
