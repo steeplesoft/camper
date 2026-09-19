@@ -82,7 +82,9 @@ class PickerField<T: PickerValue>(
                 title = label,
                 optionsList = fieldState.options,
                 optionItemFormatter = fieldState.optionItemFormatter,
-                optionKey = optionKey?.let { key -> { item -> item?.let(key) } },
+                optionKey = optionKey?.let { key ->
+                    { item -> item?.let(key) ?: fieldState.options.indexOf(item) }
+                },
                 defaultSelected = fieldState.state.value,
                 submitButtonText = "OK",
                 submitOnSelect = submitOnSelect,
