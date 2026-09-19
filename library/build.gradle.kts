@@ -58,6 +58,11 @@ kotlin {
             implementation(kotlin("test"))
             implementation(libs.compose.ui.test)
         }
+        getByName("androidHostTest") {
+            dependencies {
+                implementation(libs.kotlin.test.junit)
+            }
+        }
     }
 }
 
