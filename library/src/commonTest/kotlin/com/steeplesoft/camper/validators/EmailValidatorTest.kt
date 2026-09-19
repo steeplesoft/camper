@@ -1,9 +1,9 @@
 package com.steeplesoft.camper.validators
 
-import kotlin.test.DefaultAsserter.assertTrue
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 
 class EmailValidatorTest {

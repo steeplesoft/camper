@@ -5,7 +5,6 @@ import androidx.compose.ui.test.assertIsToggleable
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.runComposeUiTest
-import androidx.compose.ui.test.setContent
 import kotlin.test.Test
 
 @OptIn(ExperimentalTestApi::class)
