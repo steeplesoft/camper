@@ -3,7 +3,6 @@ package com.steeplesoft.camper.demo
 import androidx.compose.runtime.mutableStateOf
 import com.steeplesoft.camper.FieldState
 import com.steeplesoft.camper.Form
-import com.steeplesoft.camper.FormField
 import com.steeplesoft.camper.demo.models.Country
 import com.steeplesoft.camper.fields.MIN
 import com.steeplesoft.camper.validators.DateValidator
@@ -19,11 +18,6 @@ class MainForm: Form() {
             country, countryNotSearchable, startDate, endDate, agreeWithTerms)
     }
 
-    override fun self(): Form {
-        return this
-    }
-
-    @FormField
     val name = FieldState(
         state = mutableStateOf<String?>(null),
         validators = mutableListOf(
@@ -35,12 +29,10 @@ class MainForm: Form() {
         )
     )
 
-    @FormField
     val lastName = FieldState(
         state = mutableStateOf<String?>(null)
     )
 
-    @FormField
     val password = FieldState(
         state = mutableStateOf<String?>(null),
         validators = mutableListOf(
@@ -52,7 +44,6 @@ class MainForm: Form() {
         )
     )
 
-    @FormField
     val passwordConfirm = FieldState(
         state = mutableStateOf<String?>(null),
         isVisible = { password.state.value != null && password.state.value!!.isNotEmpty()  },
@@ -61,7 +52,6 @@ class MainForm: Form() {
         )
     )
 
-    @FormField
     val email = FieldState(
         state = mutableStateOf<String?>(null),
         validators = mutableListOf(
@@ -69,7 +59,6 @@ class MainForm: Form() {
         )
     )
 
-    @FormField
     val country = FieldState(
         state = mutableStateOf<Country?>(null),
         options = mutableListOf(
@@ -87,7 +76,6 @@ class MainForm: Form() {
         )
     )
 
-    @FormField
     val countryNotSearchable = FieldState(
         state = mutableStateOf<Country?>(null),
         options = mutableListOf(
@@ -103,7 +91,6 @@ class MainForm: Form() {
         }
     }
 
-    @FormField
     val startDate = FieldState(
         state = mutableStateOf<LocalDate?>(null),
         validators = mutableListOf(
@@ -111,7 +98,6 @@ class MainForm: Form() {
         )
     )
 
-    @FormField
     val endDate = FieldState(
         state = mutableStateOf<LocalDate?>(null),
         validators = mutableListOf(
@@ -123,7 +109,6 @@ class MainForm: Form() {
         )
     )
 
-    @FormField
     val agreeWithTerms = FieldState(
         state = mutableStateOf<Boolean?>(null),
         validators = mutableListOf(

@@ -36,7 +36,7 @@ In a first example we create a simple form with two text fields. The form will l
 
 ![KmpForm Simple](/screenshots/png/simple-form.png "Simple Form")
 
-1. Create a your form class with your form field annotations (`@FormField`)
+1. Create your form class and list its fields from `getFormFields()`.
 ```kotlin
 class MainForm(): Form() {
     override fun self(): Form {
@@ -45,13 +45,11 @@ class MainForm(): Form() {
 
     override fun getFormFields() = listOf(name, lastName)
 
-    @FormField
     val name = FieldState(
         state = mutableStateOf<String?>(null),
         validators = mutableListOf(NotEmptyValidator())
     )
 
-    @FormField
     val lastName = FieldState(
         state = mutableStateOf<String?>(null)
     )
@@ -95,7 +93,7 @@ searchable pickers. This is how the form will look like:
 
 ![KmpForm Extended](/screenshots/gif/KmpForm-extended.gif "Extended Form")
 
-1. Create a form class with form fields. Define form fields by the `@FormField` annotation.
+1. Create a form class with form fields and return them from `getFormFields()`.
 ```kotlin
 // in this example we have a separate data class `Country` for a country picker.
 data class Country(
@@ -115,7 +113,6 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
     override fun getFormFields() = listOf(name, lastName, password, passwordConfirm, email,
         country, startDate, endDate, agreeWithTerms)
 
-    @FormField
     val name = FieldState(
         state = mutableStateOf<String?>(null),
         validators = mutableListOf(
@@ -127,12 +124,10 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
         )
     )
 
-    @FormField
     val lastName = FieldState(
         state = mutableStateOf<String?>(null)
     )
 
-    @FormField
     val password = FieldState(
         state = mutableStateOf<String?>(null),
         validators = mutableListOf(
@@ -144,7 +139,6 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
         )
     )
 
-    @FormField
     val passwordConfirm = FieldState(
         state = mutableStateOf<String?>(null),
         validators = mutableListOf(
@@ -152,7 +146,6 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
         )
     )
 
-    @FormField
     val email = FieldState(
         state = mutableStateOf<String?>(null),
         validators = mutableListOf(
@@ -160,7 +153,6 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
         )
     )
 
-    @FormField
     val country = FieldState(
         state = mutableStateOf<Country?>(null),
         options = mutableListOf(
@@ -178,7 +170,6 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
         )
     )
 
-    @FormField
     val startDate = FieldState(
         state = mutableStateOf<Date?>(null),
         validators = mutableListOf(
@@ -186,7 +177,6 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
         )
     )
 
-    @FormField
     val endDate = FieldState(
         state = mutableStateOf<Date?>(null),
         validators = mutableListOf(
@@ -198,7 +188,6 @@ class MainForm(resourcesProvider: ResourcesProvider): Form() {
         )
     )
 
-    @FormField
     val agreeWithTerms = FieldState(
         state = mutableStateOf<Boolean?>(null),
         validators = mutableListOf(
@@ -281,7 +270,7 @@ Column {
         label = "End Date",
         form = viewModel.form,
         fieldState = viewModel.form.endDate,
-        formatter = ::dateLong
+        formatter = ::dateShort
     ).Field()
 
     CheckboxField(

@@ -20,7 +20,6 @@ import com.steeplesoft.camper.fields.DateField
 import com.steeplesoft.camper.fields.PasswordField
 import com.steeplesoft.camper.fields.PickerField
 import com.steeplesoft.camper.fields.TextField
-import com.steeplesoft.camper.formatters.dateLong
 import com.steeplesoft.camper.formatters.dateShort
 
 @Composable
@@ -113,7 +112,7 @@ fun FormPage() {
                             label = "End Date",
                             form = form,
                             fieldState = form.endDate,
-                            formatter = ::dateLong
+                            formatter = ::dateShort
                         ).Field()
 
                         CheckboxField(

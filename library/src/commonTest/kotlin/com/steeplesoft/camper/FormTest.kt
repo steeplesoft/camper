@@ -11,7 +11,6 @@ class FormTest {
     private lateinit var form: TestForm
 
     class TestForm : Form() {
-        @FormField
         val name = FieldState(
             state = mutableStateOf<String?>(null),
             validators = mutableListOf(
@@ -22,7 +21,6 @@ class FormTest {
             )
         )
 
-        @FormField
         val email = FieldState(
             state = mutableStateOf<String?>(null),
             validators = mutableListOf(
@@ -33,7 +31,6 @@ class FormTest {
             )
         )
 
-        @FormField
         val optional = FieldState(
             state = mutableStateOf<String?>(null)
         )
@@ -222,7 +219,6 @@ class FormTest {
     @Test
     fun validate_skipsInvisibleFields() {
         val formWithInvisible = object : Form() {
-            @FormField
             val visible = FieldState(
                 state = mutableStateOf<String?>("value"),
                 validators = mutableListOf(
@@ -233,7 +229,6 @@ class FormTest {
                 )
             )
 
-            @FormField
             val invisible = FieldState(
                 state = mutableStateOf<String?>(null),
                 isVisible = { false },
