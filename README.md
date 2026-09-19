@@ -39,10 +39,6 @@ In a first example we create a simple form with two text fields. The form will l
 1. Create your form class and list its fields from `getFormFields()`.
 ```kotlin
 class MainForm(): Form() {
-    override fun self(): Form {
-        return this
-    }
-
     override fun getFormFields() = listOf(name, lastName)
 
     val name = FieldState(
@@ -106,10 +102,6 @@ data class Country(
 }
 
 class MainForm(resourcesProvider: ResourcesProvider): Form() {
-    override fun self(): Form {
-        return this
-    }
-
     override fun getFormFields() = listOf(name, lastName, password, passwordConfirm, email,
         country, startDate, endDate, agreeWithTerms)
 
