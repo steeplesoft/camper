@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
@@ -20,6 +18,8 @@ kotlin {
     android {
         namespace = "com.steeplesoft.camper"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        withHostTestBuilder {}
         packaging {
             resources {
                 excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -40,11 +40,6 @@ kotlin {
             binaryOption("bundleId", "com.steeplesoft.camper")
             isStatic = true
         }
-    }
-
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-        freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
     sourceSets {
@@ -119,6 +114,3 @@ mavenPublishing {
 
     signAllPublications()
 }
-
-tasks.named("build") { finalizedBy("publishToMavenLocal") }
-tasks.named("assemble") { finalizedBy("publishToMavenLocal") }
