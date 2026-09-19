@@ -3,7 +3,7 @@ package com.steeplesoft.camper.validators
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.DefaultAsserter.assertTrue
 
 
 class EmailValidatorTest {
@@ -70,7 +70,7 @@ class EmailValidatorTest {
 
     @Test
     fun validate_withUppercaseAddress_returnsTrue() {
-        assertTrue(EmailValidator().validate("User@Example.COM"))
+        assertTrue("Uppercase email addresses should pass validation", EmailValidator().validate("User@Example.COM"))
     }
 
     @Test
