@@ -58,6 +58,9 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.compose.ui.test)
         }
+        androidHostTest.dependencies {
+            implementation(libs.kotlin.test.junit)
+        }
     }
 }
 
