@@ -1,7 +1,7 @@
 package com.steeplesoft.camper.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 
@@ -26,9 +27,11 @@ fun SwitchComponent(
         Column(modifier = modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.small)
-            .clickable(
+            .toggleable(
+                value = checked,
                 enabled = isEnabled,
-                onClick = { onCheckedChange(!checked) }
+                role = Role.Switch,
+                onValueChange = onCheckedChange
             )
         ) {
             Row(

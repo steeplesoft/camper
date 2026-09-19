@@ -24,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -38,6 +39,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 
 @Composable
 fun SecuredTextFieldComponent(
@@ -55,14 +58,21 @@ fun SecuredTextFieldComponent(
     focusRequester: FocusRequester = FocusRequester(),
 ) {
     var showPassword by remember { mutableStateOf(false) }
-    val state = remember { TextFieldState() }
-    var password by remember { mutableStateOf("") }
+    val state = rememberTextFieldState(text)
+    val latestOnChange by rememberUpdatedState(onChange)
+    var syncingFromModel by remember { mutableStateOf(false) }
+    LaunchedEffect(text) {
+        if (state.text.toString() != text) {
+            syncingFromModel = true
+            state.setTextAndPlaceCursorAtEnd(text)
+            syncingFromModel = false
+        }
+    }
     LaunchedEffect(state) {
         snapshotFlow { state.text } // Observe changes to the text property
             .collect { newText ->
-                if (newText != password) {
-                    password = newText.toString()
-                    onChange(password)
+                if (!syncingFromModel) {
+                    latestOnChange(newText.toString())
                 }
             }
     }
@@ -77,7 +87,7 @@ fun SecuredTextFieldComponent(
             } else {
                 TextObfuscationMode.RevealLastTyped
             },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
 //            .padding(6.dp)
 //            .border(1.dp, Color.LightGray, RoundedCornerShape(6.dp))

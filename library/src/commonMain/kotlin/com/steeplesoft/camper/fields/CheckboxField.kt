@@ -44,6 +44,7 @@ class CheckboxField(
                 this.onChange(it, form)
             },
             label = label,
+            isEnabled = isEnabled,
             hasError = fieldState.hasError(),
             errorText = fieldState.errorText
         )

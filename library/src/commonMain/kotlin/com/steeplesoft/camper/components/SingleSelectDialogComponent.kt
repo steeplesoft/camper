@@ -38,6 +38,7 @@ fun <T> SingleSelectDialogComponent(
     onSubmitButtonClick: (T?) -> Unit,
     onDismissRequest: () -> Unit,
     optionItemFormatter: ((T?) -> String)? = null,
+    optionKey: ((T?) -> Any)? = null,
     search: ((options: MutableList<T?>, query: String) -> List<T?>)? = null,
     submitOnSelect: Boolean = false
 ) {
@@ -78,9 +79,7 @@ fun <T> SingleSelectDialogComponent(
                 ) {
                     items(
                         items = search?.invoke(optionsList, query.value) ?: optionsList,
-                        key = { i ->
-                            i.toString()
-                        }
+                        key = optionKey
                     ) { item ->
                         RadioButtonComponent(
                             label = optionItemFormatter?.invoke(item) ?: item.toString(),

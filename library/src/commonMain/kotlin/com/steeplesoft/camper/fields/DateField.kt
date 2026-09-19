@@ -36,8 +36,6 @@ class DateField(
     isEnabled: Boolean = true,
     imeAction: ImeAction = ImeAction.Next,
     formatter: ((raw: LocalDate?) -> String)? = null,
-    private val themeResId: Int = 0,
-    private val submitOnSelect: Boolean = false,
     changed: ((v: LocalDate?) -> Unit)? = null
 ) : Field<LocalDate>(
     label = label,
@@ -63,11 +61,10 @@ class DateField(
 
         val openDialog = remember { mutableStateOf(false) }
 
-        val focusRequester = FocusRequester()
+        val focusRequester = remember { FocusRequester() }
 
         val calendar = value.value ?: LocalDate.now()
 
-        val date = remember { mutableStateOf("") }
         if (openDialog.value) {
             val datePickerState = rememberDatePickerState(
                 initialSelectedDateMillis = calendar.toEpochDays() * 86400000L
@@ -82,7 +79,12 @@ class DateField(
                     TextButton(
                         onClick = {
                             datePickerState.selectedDateMillis?.let {
-                                fieldState.state.value = Instant.fromEpochMilliseconds(it).toLocalDateTime(TimeZone.UTC).date
+                                onChange(
+                                    Instant.fromEpochMilliseconds(it)
+                                        .toLocalDateTime(TimeZone.UTC)
+                                        .date,
+                                    form
+                                )
                             }
                             openDialog.value = false
                         }
@@ -106,7 +108,7 @@ class DateField(
             modifier = modifier ?: Modifier,
             isEnabled = isEnabled,
             label = label,
-            text = formatter?.invoke(value.value) ?: value.value.toString(),
+            text = formatter?.invoke(value.value) ?: (value.value?.toString() ?: ""),
             hasError = fieldState.hasError(),
             errorText = fieldState.errorText,
             isReadOnly = true,

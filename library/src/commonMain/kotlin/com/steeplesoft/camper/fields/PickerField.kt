@@ -33,6 +33,7 @@ class PickerField<T: PickerValue>(
     formatter: ((raw: T?) -> String)? = null,
     private val isSearchable: Boolean = true,
     private val submitOnSelect: Boolean = false,
+    private val optionKey: ((T) -> Any)? = null,
     changed: ((v: T?) -> Unit)? = null
 ) : Field<T>(
     label = label,
@@ -53,7 +54,7 @@ class PickerField<T: PickerValue>(
         }
 
         var isDialogVisible by remember { mutableStateOf(false) }
-        val focusRequester = FocusRequester()
+        val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
 
         TextFieldComponent(
@@ -81,6 +82,7 @@ class PickerField<T: PickerValue>(
                 title = label,
                 optionsList = fieldState.options,
                 optionItemFormatter = fieldState.optionItemFormatter,
+                optionKey = optionKey?.let { key -> { item -> item?.let(key) } },
                 defaultSelected = fieldState.state.value,
                 submitButtonText = "OK",
                 submitOnSelect = submitOnSelect,
