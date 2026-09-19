@@ -55,13 +55,8 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
         }
         commonTest.dependencies {
-            implementation(libs.kotlin.test)
+            implementation(kotlin("test"))
             implementation(libs.compose.ui.test)
-        }
-        getByName("androidHostTest") {
-            dependencies {
-                implementation(libs.kotlin.test.junit)
-            }
         }
     }
 }
